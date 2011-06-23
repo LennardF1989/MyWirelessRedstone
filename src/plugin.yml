@@ -1,0 +1,4 @@
+name: MyWirelessRedstone
+main: com.lennardf1989.mywirelessredstone.MyWirelessRedstone
+version: 1.0
+commands:
