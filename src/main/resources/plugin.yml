@@ -1,0 +1,6 @@
+name: MyWirelessRedstone
+main: com.lennardf1989.mywirelessredstone.MyWirelessRedstone
+version: 1.0
+website: http://www.lennardf1989.com
+author: Lennard Fonteijn
+description: My own no-nonsense version of the WirelessRedstone CraftBukkit plugin
