@@ -17,7 +17,7 @@ public class MWRBlockListener extends BlockListener {
     public void registerEvents() {
         MyWirelessRedstone plugin = MyWirelessRedstone.getInstance();
         PluginManager pm = plugin.getServer().getPluginManager();
-        
+
         pm.registerEvent(Type.BLOCK_PLACE, this, Priority.Normal, plugin);
         pm.registerEvent(Type.SIGN_CHANGE, this, Priority.Normal, plugin);
         pm.registerEvent(Type.REDSTONE_CHANGE, this, Priority.Normal, plugin);
@@ -38,7 +38,7 @@ public class MWRBlockListener extends BlockListener {
     @Override
     public void onSignChange(SignChangeEvent event) {
         //TODO: Sign position added
-        
+
         /*
              If sign is transmitter then add transmitter
              Else if sign is receiver then add receiver
@@ -83,7 +83,7 @@ public class MWRBlockListener extends BlockListener {
     public void onBlockRedstoneChange(BlockRedstoneEvent event) {
         // Sign <-> Redstone Torch On || Torch <-> Redstone Torch Off
     }
-    
+
     @Override
     public void onBlockBreak(BlockBreakEvent event) {
         //TODO: (Redstone) Torch/Sign position removed

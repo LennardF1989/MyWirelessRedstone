@@ -1,16 +1,21 @@
 package com.lennardf1989.mywirelessredstone.models;
 
-import javax.persistence.Embeddable;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-@Embeddable
-public class MWRSign {
+@MappedSuperclass
+public abstract class MWRSign {
+    @Id
+    private int id;
+
     private int x;
     private int y;
     private int z;
     private String world;
-    
+
     /**
      * Constructor intended for the Persistence Layer, not for public use.
      */
@@ -22,6 +27,22 @@ public class MWRSign {
         this.y = location.getBlockY();
         this.z = location.getBlockZ();
         this.world = location.getWorld().getName();
+    }
+
+    /**
+     * Method intended for the Persistence Layer, not for public use.
+     */
+    @Deprecated 
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Method intended for the Persistence Layer, not for public use.
+     */
+    @Deprecated 
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getX() {
@@ -70,6 +91,10 @@ public class MWRSign {
     @Deprecated
     public void setWorld(String world) {
         this.world = world;
+    }
+    
+    public Location getLocation() {
+        return new Location(Bukkit.getServer().getWorld(world), x, y, z);
     }
 
     @Override

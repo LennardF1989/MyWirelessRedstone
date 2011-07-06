@@ -17,12 +17,29 @@ public class MWREntityListener extends EntityListener {
     public void registerEvents() {
         MyWirelessRedstone plugin = MyWirelessRedstone.getInstance();
         PluginManager pm = plugin.getServer().getPluginManager();
-        
+
         pm.registerEvent(Type.PRE_ITEM_SPAWN, this, Priority.Normal, plugin);
         pm.registerEvent(Type.ENTITY_EXPLODE, this, Priority.Normal, plugin);
     }
-    
+
     @Override
+    /*public void onEntityExplode(EntityExplodeEvent event) {
+        for(EntityExplodeEventBlock explosionBlock : event.getBlocks())
+        {
+            Block block = explosionBlock.getBlock();
+            Material type = block.getType();
+
+            if(     type == Material.REDSTONE_TORCH_ON || 
+                    type == Material.REDSTONE_TORCH_OFF || 
+                    type == Material.SIGN_POST ||
+                    type == Material.WALL_SIGN ||
+                    type == Material.TORCH)
+            {
+                //TODO: (Redstone) Torch/Sign position removed
+            }
+        }
+    }*/
+    
     public void onEntityExplode(EntityExplodeEvent event) {
         for(EntityExplodeEventBlock explosionBlock : event.getBlocks())
         {
@@ -30,27 +47,48 @@ public class MWREntityListener extends EntityListener {
             Material type = block.getType();
 
             if( type == Material.REDSTONE_TORCH_ON || 
-                type == Material.REDSTONE_TORCH_OFF || 
                 type == Material.SIGN_POST ||
                 type == Material.WALL_SIGN ||
                 type == Material.TORCH)
             {
-                //TODO: (Redstone) Torch/Sign position removed
+                Bukkit.getServer().broadcastMessage("Explosion destroys " + type + " at location " + block.getLocation());
+            }
+            else if(type == Material.SAND) {
+                explosionBlock.setDestroyable(false);
+            }
+            else if(type == Material.GRAVEL) {
+                explosionBlock.setDestroyable(false);
+                explosionBlock.setDropable(false);
+            }
+            else if(type == Material.DIRT) {
+                explosionBlock.setYield(1.0F);
             }
         }
     }
-    
+
     @Override
+    /*public void onPreItemSpawn(PreItemSpawnEvent event) {
+        Material type = event.getItem().getType();
+        Bukkit.getServer().broadcastMessage(type.name());
+
+        if(     type == Material.REDSTONE_TORCH_ON || 
+                type == Material.REDSTONE_TORCH_OFF || 
+                type == Material.SIGN ||
+                type == Material.TORCH) 
+        {
+            //TODO: (Redstone) Torch/Sign position removed
+        }
+    }*/
+    
     public void onPreItemSpawn(PreItemSpawnEvent event) {
         Material type = event.getItem().getType();
         Bukkit.getServer().broadcastMessage(type.name());
 
         if( type == Material.REDSTONE_TORCH_ON || 
-            type == Material.REDSTONE_TORCH_OFF || 
-            type == Material.SIGN ||
-            type == Material.TORCH) 
+                type == Material.SIGN ||
+                type == Material.TORCH) 
         {
-            //TODO: (Redstone) Torch/Sign position removed
+            Bukkit.getServer().broadcastMessage("Unregistered position, disallowing pickup");
         }
     }
 }
